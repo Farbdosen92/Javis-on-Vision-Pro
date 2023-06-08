@@ -1,90 +1,57 @@
-# Xcode
-#
-# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+import UIKit
+import AVFoundation
 
-## User settings
-xcuserdata/
+class ViewController: UIViewController {
+    let speechSynthesizer = AVSpeechSynthesizer()
 
-## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
-*.xcscmblueprint
-*.xccheckout
-
-## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
-build/
-DerivedData/
-*.moved-aside
-*.pbxuser
-!default.pbxuser
-*.mode1v3
-!default.mode1v3
-*.mode2v3
-!default.mode2v3
-*.perspectivev3
-!default.perspectivev3
-
-## Obj-C/Swift specific
-*.hmap
-
-## App packaging
-*.ipa
-*.dSYM.zip
-*.dSYM
-
-## Playgrounds
-timeline.xctimeline
-playground.xcworkspace
-
-# Swift Package Manager
-#
-# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
-# Packages/
-# Package.pins
-# Package.resolved
-# *.xcodeproj
-#
-# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
-# hence it is not needed unless you have added a package configuration file to your project
-# .swiftpm
-
-.build/
-
-# CocoaPods
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-# Pods/
-#
-# Add this line if you want to avoid checking in source code from the Xcode workspace
-# *.xcworkspace
-
-# Carthage
-#
-# Add this line if you want to avoid checking in source code from Carthage dependencies.
-# Carthage/Checkouts
-
-Carthage/Build/
-
-# Accio dependency management
-Dependencies/
-.accio/
-
-# fastlane
-#
-# It is recommended to not store the screenshots in the git repo.
-# Instead, use fastlane to re-generate the screenshots whenever they are needed.
-# For more information about the recommended setup visit:
-# https://docs.fastlane.tools/best-practices/source-control/#source-control
-
-fastlane/report.xml
-fastlane/Preview.html
-fastlane/screenshots/**/*.png
-fastlane/test_output
-
-# Code Injection
-#
-# After new code Injection tools there's a generated folder /iOSInjectionProject
-# https://github.com/johnno1962/injectionforxcode
-
-iOSInjectionProject/
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        performMorningRoutine()
+    }
+    
+    // Funktion für die morgendliche Routine
+    func performMorningRoutine() {
+        // Begrüßung sagen
+        let greeting = "Guten Morgen!"
+        speakText(greeting)
+        
+        // Wetterinformationen abrufen und vorlesen
+        let weatherInfo = getWeatherInformation()
+        speakText(weatherInfo)
+        
+        // Weitere morgendliche Aktionen ausführen
+        // ...
+    }
+    
+    // Funktion für die nächtliche Routine
+    func performNightRoutine() {
+        // Gute Nacht wünschen
+        let goodNight = "Gute Nacht!"
+        speakText(goodNight)
+        
+        // Weitere nächtliche Aktionen ausführen
+        // ...
+    }
+    
+    // Funktion, um den übergebenen Text vorzulesen
+    func speakText(_ text: String) {
+        let speechUtterance = AVSpeechUtterance(string: text)
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "de-DE")
+        speechSynthesizer.speak(speechUtterance)
+    }
+    
+    // Funktion, um Wetterinformationen abzurufen
+    func getWeatherInformation() -> String {
+        // Hier kannst du Code einfügen, um Wetterdaten von einer API oder einem anderen Quelle zu erhalten
+        // Zum Beispiel:
+        let temperature = 25
+        let weatherDescription = "Sonnig"
+        
+        let weatherInfo = "Heute wird es \(weatherDescription) mit einer Temperatur von \(temperature) Grad Celsius."
+        return weatherInfo
+    }
+}
